@@ -93,18 +93,19 @@
        <!-- Habits  -->
         <section id="habits" class="w-full">
           <ul id="habits-ul">
-            <li class="relative flex items-center box-card-design py-5 px-7">
+            <li class="relative flex items-center checked-box-habit py-5 px-7 ">
               <!-- button  -->
               
-              <input type="checkbox">
+              <button class="w-7 h-7 rounded-full border-2 border-[#52525c] hover:scale-120 transition duration-300 checked-button-habit cursor-pointer"> <i class="fa fa-check"></i> </button>
+
               <div class="ml-4">
                 <p class="text-bold text-xl text-neutral-200">Workout</p>
 
                 <!-- shows day streak and a hidden total that appears after checking the box -->
-                <div class="">
-                  <i class="fa fa-fire text-sm mr-3"></i>
-                  <p class="inline-block"> <span>0</span> day streak </p>
-                  <p class="inline-block ml-4">• 1 total</p>
+                <div class="inline-block">
+                  <i class="fa fa-fire text-sm mr-3 checked-box-fire-color "></i>
+                  <p class="inline-block checked-box-fire-color "> <span>0</span> day streak </p>
+                  <span class="ml-4 text-stone-500">• 1 total</span>
                 </div>
               </div>
 
