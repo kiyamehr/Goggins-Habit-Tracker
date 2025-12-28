@@ -139,21 +139,41 @@
       <!-- add habit modal -->
 
       <!-- overlay -->
-      <div id="overlay" class="absolute top-0 w-screen h-screen bg-[#09090b] z-5"></div>
+      <div id="overlay" class="hidden absolute top-0 w-screen h-screen bg-[#09090b] z-5"></div>
 
       <!-- add habit -->
-      <div id="add-habit" class="flex items-center justify-center z-10 top-0 absolute w-screen h-screen">
+      <div id="add-habit" class="hidden flex items-center justify-center z-10 top-0 absolute w-screen h-screen">
         
         <!-- add habit card  -->
-        <div id="add-habit-box" class="py-4 px-3 bg-[#18181b] border-2 border-red-600 w-9/12 lg:w-2/5 h-2/5 lg:h-1/2 rounded-sm">
+        <div id="add-habit-box" class="py-4 px-3 bg-[#18181b] border-2 border-red-600 w-9/12 lg:w-2/5 min-h-6/12 lg:h-1/2 rounded-sm">
           <section class="flex items-center w-full ">
             <h1 class="text-2xl">ADD NEW HABIT</h1>
-            <i class="fa fa-x ml-auto mt-1 mr-4 text-[#71717b] hover:text-white transition duration-300 "></i>
+            <!-- close button  -->
+            <i id="mdoal-close-icon" class="fa fa-x ml-auto mt-1 mr-4 text-[#71717b] hover:text-white transition duration-300 "></i>
           </section>
 
           <p class="text-sm text-[#71717b] my-4">Habit Name</p>
 
-          <input id="add-habit-modal-input" class="w-full bg-[#09090b] border-2 border-[#3f3f46] focus:border-red-600 placeholder-[#3f3f46] text-white py-2 px-3 outline-none rounded-sm" type="text" placeholder="e.g., Run 5 miles, Read 30 minutes...">
+          <!-- input cancel add habit form  -->
+          <form id="add-habit-modal-form" class="" action="">
+            <!-- add habit input -->
+            <input id="add-habit-modal-input" class="w-full bg-[#09090b] border-2 border-[#3f3f46] focus:border-red-600 placeholder-[#3f3f46] text-white py-2 px-3 outline-none rounded-sm" type="text" placeholder="e.g., Run 5 miles, Read 30 minutes...">
+  
+            <!-- buttons -->
+             <section class="grid grid-cols-2 my-4 gap-4">
+              <!-- cancel -->
+              <button id="add-habit-modal-cancel" class="bg-neutral-800 hover:bg-neutral-700 border-2 border-[#3f3f46] min-w-full mx-auto px-2 py-3 rounded-sm transition duration-300 cursor-pointer">CANCEL</button>
+  
+              <!-- add habit button  -->
+              <button id="add-habit-modal-add-habit" class="bg-red-600 hover:bg-red-700 border-2 border-red-500 min-w-full mx-auto px-2 py-3 rounded-sm transition duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-600" disabled="">ADD HABIT</button>
+             </section>
+
+             <!-- modal quote  -->
+             <section class="text-center w-full mt-7">
+               <q class="text-sm text-[#71717b] italic lg:mt-10" cite="https://davidgoggins.com/">Don't stop when you're tired, stop when you're done</q>
+             </section>
+
+          </form>
 
         </div>
 
