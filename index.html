@@ -27,7 +27,7 @@
       >
     </header>
 
-    <main class=" lg:w-5/6 lg:flex flex-wrap lg:justify-center lg:mx-auto mx-2 ">
+    <main class=" lg:w-5/6 lg:flex flex-wrap lg:justify-center lg:mx-auto mx-3 ">
       <!-- Tracking section  -->
       <section
         id="tracking-box"
@@ -89,6 +89,28 @@
        <section id="add-habit" class="w-full my-8">
         <button class="w-full bg-red-600 hover:bg-red-800 cursor-pointer transition duration-300 text-white py-3 rounded-sm"><i class="fa fa-plus"></i>&nbsp;&nbsp; ADD NEW HABIT</button>
        </section>
+
+       <!-- Habits  -->
+        <section id="habits" class="w-full">
+          <ul id="habits-ul">
+            <li class="flex items-center box-card-design">
+              <!-- button  -->
+              <input type="checkbox">
+
+              <div class="ml-4">
+                <p class="text-bold text-xl text-neutral-200">Workout</p>
+
+                <!-- shows day streak and a hidden total that appears after checking the box -->
+                <div class="">
+                  <i class="fa fa-fire text-sm mr-3"></i>
+                  <p class="inline-block"> <span>0</span> day streak </p>
+                  <p class="inline-block ml-4">• 1 total</p>
+                </div>
+
+              </div>
+            </li>
+          </ul>
+        </section>
   
       <script src="src/main.js"></script>
     </main>
