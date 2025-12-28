@@ -27,15 +27,15 @@
       >
     </header>
 
-    <main class="lg:w-5/6 lg:flex lg:justify-center lg:mx-auto">
+    <main class="bg-blue-950 lg:w-5/6 lg:flex lg:justify-center lg:mx-auto mx-2 ">
       <!-- Tracking section  -->
       <section
         id="tracking-box"
-        class="grid sm:grid-cols-4 items-center justify-center grid-cols-2 mx-2 my-5 gap-2 lg:gap-5"
+        class="grid sm:grid-cols-4 items-center justify-center grid-cols-2 my-5 gap-2 lg:gap-5"
       >
         <div
           id="completed-today"
-          class="w-full tacker-box-design py-4 px-5 rounded-sm"
+          class="w-full box-card-design py-4 px-5 rounded-sm"
         >
           <p class="text-base text-[#71717b]">
             <i class="fa fa-bullseye text-[#f92b35]"> </i> TODAY
@@ -46,7 +46,7 @@
   
         <div
           id="best-streak"
-          class="w-full tacker-box-design py-4 px-5 rounded-sm"
+          class="w-full box-card-design py-4 px-5 rounded-sm"
         >
           <p class="text-base text-[#71717b]">
             <i class="fa fa-arrow-trend-up text-[#ff6900]"></i> BEST STREAK
@@ -57,7 +57,7 @@
   
         <div
           id="total-reps"
-          class="w-full tacker-box-design py-4 px-5 rounded-sm"
+          class="w-full box-card-design py-4 px-5 rounded-sm"
         >
           <p class="text-base text-[#71717b]">
             <i class="fa fa-check-double text-[#00c54e]"></i> TOTAL REPS
@@ -68,7 +68,7 @@
   
         <div
           id="habits"
-          class="w-full tacker-box-design py-4 px-5 rounded-sm"
+          class="w-full box-card-design py-4 px-5 rounded-sm"
         >
           <p class="text-base text-[#71717b]">
             <i class="fa fa-medal text-[#f0b100]"></i> Habits
@@ -77,10 +77,12 @@
           <p class="text-sm text-[#52525c]">Active missions</p>
         </div>
       </section>
-  
+      <br>
       <!-- habits status -->
-       <section id="habits-status" class="grid grid-cols-3 bg-amber-800 gap-3 lg:gap-5">
-        <button class="bg-[#e7000b]">asf</button>
+       <section id="habits-status" class="grid grid-cols-3 gap-3 lg:gap-5">
+        <button class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm ">All (<span>3</span>)</button>
+        <button class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Completed (<span>2</span>)</button>
+        <button class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Missed (<span>1</span>)</button>
        </section>
   
       <script src="src/main.js"></script>
