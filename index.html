@@ -141,13 +141,21 @@
       <!-- overlay -->
       <div id="overlay" class="absolute top-0 w-screen h-screen bg-[#09090b] z-5"></div>
 
-      <!-- add habit box -->
-      <div id="add-task-box" class="flex items-center justify-center z-10 top-0 absolute w-screen h-screen">
+      <!-- add habit -->
+      <div id="add-habit" class="flex items-center justify-center z-10 top-0 absolute w-screen h-screen">
         
-        <section class="flex items-center bg-red-950 min-w-2/5 min-h-1/2 ">
-          <h1>ADD NEW HABIT</h1>
-          <i class="fa fa-x ml-auto"></i>
-        </section>
+        <!-- add habit card  -->
+        <div id="add-habit-box" class="py-4 px-3 bg-[#18181b] border-2 border-red-600 w-9/12 lg:w-2/5 h-2/5 lg:h-1/2 rounded-sm">
+          <section class="flex items-center w-full ">
+            <h1 class="text-2xl">ADD NEW HABIT</h1>
+            <i class="fa fa-x ml-auto mt-1 mr-4 text-[#71717b] hover:text-white transition duration-300 "></i>
+          </section>
+
+          <p class="text-sm text-[#71717b] my-4">Habit Name</p>
+
+          <input id="add-habit-modal-input" class="w-full bg-[#09090b] border-2 border-[#3f3f46] focus:border-red-600 placeholder-[#3f3f46] text-white py-2 px-3 outline-none rounded-sm" type="text" placeholder="e.g., Run 5 miles, Read 30 minutes...">
+
+        </div>
 
       </div>
 
