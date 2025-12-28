@@ -1,1 +1,10 @@
 @import "tailwindcss";
+
+.text-white {
+  color: #ffffff;
+}
+
+.tacker-box-design {
+  background-color: #18181b;
+  border: 2px solid #27272a;
+}
