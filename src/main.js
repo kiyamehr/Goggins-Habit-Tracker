@@ -5,8 +5,12 @@
 // Header
 const headerQuote = document.querySelector('#quote');
 
+// tracking box
+const totalHabitsEl = document.querySelector('#total-habits');
+
 // Habits list
 const ulHabitEl = document.querySelector('#habits-ul');
+const habitButtonEl = document.querySelector('.habit-didtoday-checkbox');
 
 //* Datas
 
@@ -43,13 +47,14 @@ const habits = [
 // structure of the habit <li> which we want to add
 const habitStructure = function (name, streak) {
   return `            
-  <li class="relative flex mb-2 items-center gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a]">
+  <li class="relative flex mb-2 items-center gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
 
               <!-- Check button -->
               <button
                 type="button"
                 aria-label="Mark habit as done"
-                class="w-7 h-7 shrink-0 rounded-full border-2 border-[#52525c] transition duration-300 hover:scale-110 cursor-pointer">
+                class="habit-didtoday-checkbox w-7 h-7 shrink-0 rounded-full border-2 border-[#52525c] transition duration-300 hover:scale-110 cursor-pointer">
+                <i class='fa fa-check opacity-0 duration-300'></i>
               </button>
 
               <!-- Content -->
@@ -57,13 +62,13 @@ const habitStructure = function (name, streak) {
                 <p class="text-xl font-bold text-neutral-200">${name}</p>
 
                 <div class="flex items-center text-sm text-neutral-300">
-                  <i class="fa fa-fire mr-2"></i>
+                  <i class="fa fa-fire mr-2 duration-300"></i>
 
-                  <span>
+                  <span class='fire-text duration-300'>
                     ${streak} day streak
                   </span>
 
-                  <span class="ml-4 text-stone-500 hidden total-count">
+                  <span class="ml-4 text-stone-500 opacity-0 total-count duration-300">
                     • 1 total
                   </span>
                 </div>
@@ -90,11 +95,51 @@ const addHabitElements = function (habits) {
   );
 };
 
-//* Working...
+// Updating Total Habits
+const totalHabits = function (habits) {
+  totalHabitsEl.textContent = habits.length;
+};
 
+//? Running Codes here --------------------------------------------------------------------------
+
+//* Header
 // Random Quote For Header
 let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
 
+//* Tracking Box
+totalHabits(habits);
+
+//* Habits list
+
 // Showing Habits in ul
 addHabitElements(habits);
+
+// if checked
+ulHabitEl.addEventListener('click', function (e) {
+  // if the button was clicked
+  const btn = e.target.closest('.habit-didtoday-checkbox');
+
+  if (!btn) return;
+
+  // selecting lis from parent element which is <li>
+  const li = btn.closest('li');
+  const checkText = li.querySelector('.fa-check');
+  const totalcount = li.querySelector('.total-count');
+  const fireIcon = li.querySelector('.fa-fire');
+  const fireText = li.querySelector('.fire-text');
+
+  // toggling classes
+  li.classList.toggle('checked-box-habit');
+
+  checkText.classList.toggle('opacity-0');
+  checkText.classList.toggle('opacity-100');
+
+  btn.classList.toggle('checked-button-habit');
+  fireIcon.classList.toggle('checked-box-fire-color');
+
+  totalcount.classList.toggle('opacity-0');
+  totalcount.classList.toggle('opacity-100');
+
+  fireText.classList.toggle('checked-box-fire-color');
+});
