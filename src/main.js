@@ -5,6 +5,9 @@
 // Header
 const headerQuote = document.querySelector('#quote');
 
+// Habits list
+const ulHabitEl = document.querySelector('#habits-ul');
+
 //* Datas
 
 // Quote Array
@@ -21,8 +24,22 @@ const quotes = [
   'The governor is in your mind. You have to kill that motherfucker.',
 ];
 
+// Habit Objects Array
+const habits = [
+  {
+    habitName: 'Run 5 Miles',
+    streak: 15,
+    didToday: false,
+  },
+  {
+    habitName: 'Increase German Score On Duolingo',
+    streak: 280,
+    didToday: true,
+  },
+];
+
 //* Working...
 
 // Random Quote For Header
-let randomQuoteNumber = Math.trunc(Math.random() * quotes.length + 1);
+let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
