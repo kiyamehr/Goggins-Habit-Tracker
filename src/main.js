@@ -129,17 +129,17 @@ ulHabitEl.addEventListener('click', function (e) {
   const fireIcon = li.querySelector('.fa-fire');
   const fireText = li.querySelector('.fire-text');
 
+  const isChecked = li.classList.toggle('checked-box-habit'); // so we dont run into bugs like if it was checked and an unchecked animaiton runs
   // toggling classes
-  li.classList.toggle('checked-box-habit');
 
-  checkText.classList.toggle('opacity-0');
-  checkText.classList.toggle('opacity-100');
+  checkText.classList.toggle('opacity-0', !isChecked); // isChecked === false = button 'wasn't' clicked
+  checkText.classList.toggle('opacity-100', isChecked); // isChecked === true = button 'was' clicked
 
-  btn.classList.toggle('checked-button-habit');
-  fireIcon.classList.toggle('checked-box-fire-color');
+  totalcount.classList.toggle('opacity-0', !isChecked);
+  totalcount.classList.toggle('opacity-100', isChecked);
 
-  totalcount.classList.toggle('opacity-0');
-  totalcount.classList.toggle('opacity-100');
-
-  fireText.classList.toggle('checked-box-fire-color');
+  btn.classList.toggle('checked-button-habit', isChecked);
+  fireIcon.classList.toggle('checked-box-fire-color', isChecked);
+  fireText.classList.toggle('checked-box-fire-color', isChecked);
 });
+//TODO: update day steak when clicked!
