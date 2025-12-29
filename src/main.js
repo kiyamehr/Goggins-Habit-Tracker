@@ -40,6 +40,7 @@ const habits = [
 
 //* Functions
 
+// structure of the habit <li> which we want to add
 const habitStructure = function (name, streak) {
   return `            
   <li class="relative flex mb-2 items-center gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a]">
@@ -79,12 +80,13 @@ const habitStructure = function (name, streak) {
             </li>`;
 };
 
-const addHabitEl = function (habits) {
-  habits.map(habit =>
-    ulHabitEl.insertAdjacentHTML(
-      'afterbegin',
-      habitStructure(habit.habitName, habit.habitStreak)
-    )
+// Adding the All habit elements in 'habits' array
+const addHabitElements = function (habits) {
+  ulHabitEl.insertAdjacentHTML(
+    'afterbegin',
+    habits
+      .map(habit => habitStructure(habit.habitName, habit.habitStreak))
+      .join('') // since map returns an array, this removes the ','
   );
 };
 
@@ -95,5 +97,4 @@ let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
 
 // Showing Habits in ul
-
-ulHabitEl.insertAdjacentHTML('afterbegin', addHabitEl(habits));
+addHabitElements(habits);
