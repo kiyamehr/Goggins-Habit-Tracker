@@ -38,7 +38,7 @@ const quotes = [
   "While you're sleeping, someone else is training.",
   "They Don't Know Me Son!",
   'Whose Gonna Carry The Boats?!',
-  "I don't stop when I'm tired. I stop when I'm done.",
+  'The only easy day was yesterday.',
   'The governor is in your mind. You have to kill that motherfucker.',
 ];
 
@@ -66,7 +66,10 @@ const calcTotalHabits = habits =>
 
 const calcBestStreak = habits => {
   const bestStreak = Math.max(...habits.map(habit => habit.habitStreak));
-  trackingBestStreakEl.textContent = bestStreak;
+
+  bestStreak !== -Infinity
+    ? (trackingBestStreakEl.textContent = bestStreak)
+    : (trackingBestStreakEl.textContent = 0);
 };
 
 const calcHabitsCompletedToday = habits => {
@@ -80,6 +83,11 @@ const calcHabitsCompletedToday = habits => {
   trackingCompletedtodayPercentage.textContent = `${calcCompletedPercent}% Completed`;
 };
 
+const calcTotalReps = function (haibts) {
+  const reps = habits.filter(habit => habit.didToday === true);
+  trackingTotalRepsEl.textContent = reps.length;
+};
+
 const updateTracking = function (habits) {
   // Total Habits
   calcTotalHabits(habits);
@@ -89,8 +97,11 @@ const updateTracking = function (habits) {
 
   // Habits that are completed today with decimal and percentage
   calcHabitsCompletedToday(habits);
-};
 
+  // calculating total reps did today
+  calcTotalReps(habits);
+};
+updateTracking(habits);
 //TODO: put all of them together, calc total,
 
 // calculating all habits statuces, all, completed, missed
@@ -217,6 +228,8 @@ ulHabitEl.addEventListener('click', function (e) {
     btnDelete.closest('li').remove(); // method 1
 
     checkHabitZeroMessage(habits);
+    updateHabitStatus(habits);
+    updateTracking(habits);
   }
 
   // Implementing Check button
@@ -258,15 +271,13 @@ ulHabitEl.addEventListener('click', function (e) {
         checkedHabitObject.habitStreak += 1; // adding one to object's day streak
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
         updateHabitStatus(habits);
-        calcBestStreak(habits);
-        calcHabitsCompletedToday(habits);
+        updateTracking(habits);
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
         updateHabitStatus(habits);
-        calcBestStreak(habits);
-        calcHabitsCompletedToday(habits);
+        updateTracking(habits);
       }
     }
     // Adding Box For when there are no habits
