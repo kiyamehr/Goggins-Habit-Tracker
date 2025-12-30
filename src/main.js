@@ -154,9 +154,9 @@ ulHabitEl.addEventListener('click', function (e) {
       const checkedHabitObject = habits.find(habit => habit.habitName === hn);
 
       if (checkedHabitObject.didToday !== true) {
-        checkedHabitObject.didToday = true;
-        checkedHabitObject.habitStreak += 1;
-        fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
+        checkedHabitObject.didToday = true; // setting didToday = true
+        checkedHabitObject.habitStreak += 1; // adding one to object's day streak
+        fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
