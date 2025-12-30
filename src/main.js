@@ -38,7 +38,7 @@ const habits = [
   {
     habitName: 'Increase German Score On Duolingo',
     habitStreak: 280,
-    didToday: true,
+    didToday: false,
   },
 ];
 
@@ -59,7 +59,7 @@ const habitStructure = function (name, streak) {
 
               <!-- Content -->
               <div class="flex-1">
-                <p class="text-xl font-bold text-neutral-200">${name}</p>
+                <p class="habit-name text-xl font-bold text-neutral-200">${name}</p>
 
                 <div class="flex items-center text-sm text-neutral-300">
                   <i class="fa fa-fire mr-2 duration-300"></i>
@@ -118,16 +118,17 @@ addHabitElements(habits);
 // if checked
 ulHabitEl.addEventListener('click', function (e) {
   // if the button was clicked
-  const btn = e.target.closest('.habit-didtoday-checkbox');
+  const btnCheck = e.target.closest('.habit-didtoday-checkbox');
 
-  if (!btn) return;
+  if (!btnCheck) return;
 
-  // selecting lis from parent element which is <li>
-  const li = btn.closest('li');
+  // selecting Els from parent element which is <li>
+  const li = btnCheck.closest('li');
   const checkText = li.querySelector('.fa-check');
   const totalcount = li.querySelector('.total-count');
   const fireIcon = li.querySelector('.fa-fire');
   const fireText = li.querySelector('.fire-text');
+  const habitName = li.querySelector('.habit-name');
 
   const isChecked = li.classList.toggle('checked-box-habit'); // so we dont run into bugs like if it was checked and an unchecked animaiton runs
   // toggling classes
@@ -138,8 +139,33 @@ ulHabitEl.addEventListener('click', function (e) {
   totalcount.classList.toggle('opacity-0', !isChecked);
   totalcount.classList.toggle('opacity-100', isChecked);
 
-  btn.classList.toggle('checked-button-habit', isChecked);
+  btnCheck.classList.toggle('checked-button-habit', isChecked);
   fireIcon.classList.toggle('checked-box-fire-color', isChecked);
   fireText.classList.toggle('checked-box-fire-color', isChecked);
+
+  // Making state True & +1 Day Streak ----------------------
+
+  // Implementing adding 1 to daystreak
+  const arrayHabitNames = habits.map(habit => habit.habitName);
+
+  // iterating through habits objects
+  for (const hn of arrayHabitNames) {
+    if (habitName.textContent === hn) {
+      const checkedHabitObject = habits.find(habit => habit.habitName === hn);
+
+      if (checkedHabitObject.didToday !== true) {
+        checkedHabitObject.didToday = true;
+        checkedHabitObject.habitStreak += 1;
+        fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
+      } else {
+        checkedHabitObject.didToday = false;
+        checkedHabitObject.habitStreak -= 1;
+        fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
+      }
+    }
+  }
+
+  //// const btnDelete = e.target.closest('.fa-trash');
+  //// btnDelete ? (btnDelete.closest('li').outerHTML = '') : 'hello';
 });
 //TODO: update day steak when clicked!
