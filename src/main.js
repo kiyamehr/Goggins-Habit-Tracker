@@ -6,7 +6,10 @@
 const headerQuote = document.querySelector('#quote');
 
 // tracking box
-const totalHabitsEl = document.querySelector('#total-habits');
+const trackingTotalHabitsEl = document.querySelector('#total-habits');
+const trackingBestStreakEl = document.querySelector('#best-streak');
+const trackingTotalRepsEl = document.querySelector('#total-reps');
+const trackingCompletedtoday = document.querySelector('#completed-today');
 
 // status buttons
 const statusAll = document.querySelector('#status-all');
@@ -52,6 +55,31 @@ const habits = [
 
 //* Functions
 
+// calculating best Streak
+const calcTotalHabits = habits =>
+  (trackingTotalHabitsEl.textContent = habits.length);
+calcTotalHabits(habits);
+
+const calcBestStreak = function (habits) {
+  const bestStreak = Math.max(...habits.map(habit => habit.habitStreak));
+  trackingBestStreakEl.textContent = bestStreak;
+};
+calcBestStreak(habits);
+
+const calcHabitsCompletedToday = function (habits) {};
+
+// calculating all habits statuces, all, completed, missed
+const calcHabitStatus = function (habits) {
+  statusAll.textContent = `All (${habits.length})`;
+
+  const trueHabits = habits.filter(habit => habit.didToday === true);
+  statusCompleted.textContent = `Completed (${trueHabits.length})`;
+
+  const falseHabits = habits.filter(habit => habit.didToday === false);
+  statusMissed.textContent = `Missed (${falseHabits.length})`;
+};
+calcHabitStatus(habits);
+
 // structure of the habit <li> which we want to add
 const habitStructure = function (name, streak) {
   return `            
@@ -93,14 +121,6 @@ const habitStructure = function (name, streak) {
             </li>`;
 };
 
-// If there is no habit unhide 'no habit message' element
-const checkHabitZeroMessage = function (habits) {
-  if (habits.length === 0) {
-    noHabitMessageEl.classList.toggle('hidden');
-  }
-};
-checkHabitZeroMessage(habits);
-
 // Adding the All habit elements in 'habits' array
 const addHabitElements = function (habits) {
   ulHabitEl.insertAdjacentHTML(
@@ -111,16 +131,13 @@ const addHabitElements = function (habits) {
   );
 };
 
-const calcHabitStatus = function (habits) {
-  statusAll.textContent = `All (${habits.length})`;
-
-  const trueHabits = habits.filter(habit => habit.didToday === true);
-  statusCompleted.textContent = `Completed (${trueHabits.length})`;
-
-  const falseHabits = habits.filter(habit => habit.didToday === false);
-  statusMissed.textContent = `Missed (${falseHabits.length})`;
+// If there is no habit unhide 'no habit message' element
+const checkHabitZeroMessage = function (habits) {
+  if (habits.length === 0) {
+    noHabitMessageEl.classList.toggle('hidden');
+  }
 };
-calcHabitStatus(habits);
+checkHabitZeroMessage(habits);
 
 //? Running Codes here --------------------------------------------------------------------------
 
@@ -128,9 +145,6 @@ calcHabitStatus(habits);
 // Random Quote For Header
 let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
-
-//* Tracking Box
-totalHabitsEl.textContent = habits.length;
 
 //* Habits list ---------
 
@@ -204,11 +218,13 @@ ulHabitEl.addEventListener('click', function (e) {
         checkedHabitObject.habitStreak += 1; // adding one to object's day streak
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
         calcHabitStatus(habits);
+        calcBestStreak(habits);
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
         calcHabitStatus(habits);
+        calcBestStreak(habits);
       }
     }
     // Adding Box For when there are no habits
