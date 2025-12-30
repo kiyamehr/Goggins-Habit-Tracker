@@ -197,6 +197,37 @@ const addHabitElements = function (habits) {
       .join('') // since map returns an array, this removes the ','
   );
 };
+// Showing Habits in ul
+addHabitElements(habits);
+
+// reusable add habit button function
+const addHabitButtonFunciton = function (e) {
+  e.preventDefault();
+
+  // inputValue = inputAddHabit.value;
+  const lastId = Math.max(...habits.map(habit => habit.id));
+
+  const habitObject = {
+    id: `${lastId + 1}`,
+    habitName: `${inputValue}`,
+    habitStreak: 0,
+    didToday: `${false}`,
+  };
+
+  if (habitObject.habitName) {
+    habits.push(habitObject);
+    inputValue = inputAddHabit.value = '';
+
+    toggleHidden(addHabitOverlay);
+    toggleHidden(addHabitModal);
+    body.classList.toggle('overflow-y-hidden');
+  }
+
+  ulHabitEl.innerHTML = '';
+  updateHabitStatus(habits);
+  updateTracking(habits);
+  addHabitElements(habits);
+};
 
 // If there is no habit unhide 'no habit message' element
 const checkHabitZeroMessage = function (habits) {
@@ -225,17 +256,19 @@ const toggleAddHabitModalStatus = () => {
 // The big button in the modal, Opens the add habit modal
 openAddHabitModal.addEventListener('click', function () {
   toggleAddHabitModalStatus();
-
-  let valueInputAddHabit;
-
-  // removing add button's disabled property
-  addHabitModal.addEventListener('input', function () {
-    valueInputAddHabit = inputAddHabit.value;
-    if (valueInputAddHabit) {
-      btnAddHabit.removeAttribute('disabled'); // toggles again and again
-    } else btnAddHabit.setAttribute('disabled', '');
-  });
 });
+
+let inputValue;
+// removing add button's disabled property
+addHabitModal.addEventListener('input', function (e) {
+  inputValue = inputAddHabit.value;
+  if (inputValue) {
+    btnAddHabit.removeAttribute('disabled'); // toggles again and again
+  } else btnAddHabit.setAttribute('disabled', '');
+});
+
+// Implementing Add Habit
+btnAddHabit.addEventListener('click', addHabitButtonFunciton);
 
 // Closing Window ------
 btnClose.addEventListener('click', toggleAddHabitModalStatus);
@@ -252,10 +285,7 @@ document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') toggleAddHabitModalStatus();
 });
 
-//* Habits list ---------
-
-// Showing Habits in ul
-addHabitElements(habits);
+//* Habits list --------
 
 // Implementing Check Animations and logic + habit Delete Button
 ulHabitEl.addEventListener('click', function (e) {
