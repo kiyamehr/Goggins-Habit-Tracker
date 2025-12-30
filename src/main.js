@@ -9,7 +9,12 @@ const headerQuote = document.querySelector('#quote');
 const trackingTotalHabitsEl = document.querySelector('#total-habits');
 const trackingBestStreakEl = document.querySelector('#best-streak');
 const trackingTotalRepsEl = document.querySelector('#total-reps');
-const trackingCompletedtoday = document.querySelector('#completed-today');
+const trackingCompletedtodayDecimal = document.querySelector(
+  '#completed-today-decimal'
+);
+const trackingCompletedtodayPercentage = document.querySelector(
+  '#completed-today-percentage'
+);
 
 // status buttons
 const statusAll = document.querySelector('#status-all');
@@ -60,13 +65,18 @@ const calcTotalHabits = habits =>
   (trackingTotalHabitsEl.textContent = habits.length);
 calcTotalHabits(habits);
 
-const calcBestStreak = function (habits) {
+const calcBestStreak = habits => {
   const bestStreak = Math.max(...habits.map(habit => habit.habitStreak));
   trackingBestStreakEl.textContent = bestStreak;
 };
 calcBestStreak(habits);
 
-const calcHabitsCompletedToday = function (habits) {};
+const calcHabitsCompletedToday = habits => {
+  const completed = habits.filter(habit => habit.didToday === true);
+
+  trackingCompletedtodayDecimal.textContent = `${completed.length}/${habits.length}`;
+};
+calcHabitsCompletedToday(habits);
 
 // calculating all habits statuces, all, completed, missed
 
@@ -83,7 +93,7 @@ const calcHabitMissed = habits => {
   statusMissed.textContent = `Missed (${falseHabits.length})`;
 };
 
-const calcHabitStatus = function (habits) {
+const updateHabitStatus = function (habits) {
   // displaying all(habits.length)
   calcHabitAll(habits);
 
@@ -93,7 +103,7 @@ const calcHabitStatus = function (habits) {
   // displaying habits that are 'missed' today
   calcHabitMissed(habits);
 };
-calcHabitStatus(habits);
+updateHabitStatus(habits);
 
 // structure of the habit <li> which we want to add
 const habitStructure = function (name, streak) {
@@ -232,14 +242,16 @@ ulHabitEl.addEventListener('click', function (e) {
         checkedHabitObject.didToday = true; // setting didToday = true
         checkedHabitObject.habitStreak += 1; // adding one to object's day streak
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
-        calcHabitStatus(habits);
+        updateHabitStatus(habits);
         calcBestStreak(habits);
+        calcHabitsCompletedToday(habits);
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
-        calcHabitStatus(habits);
+        updateHabitStatus(habits);
         calcBestStreak(habits);
+        calcHabitsCompletedToday(habits);
       }
     }
     // Adding Box For when there are no habits
