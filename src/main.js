@@ -30,18 +30,18 @@ const quotes = [
 
 // Habit Objects Array
 const habits = [
-  {
-    id: 1,
-    habitName: 'Run 5 Miles',
-    habitStreak: 15,
-    didToday: false,
-  },
-  {
-    id: 2,
-    habitName: 'Increase German Score On Duolingo',
-    habitStreak: 280,
-    didToday: false,
-  },
+  // {
+  //   id: 1,
+  //   habitName: 'Run 5 Miles',
+  //   habitStreak: 15,
+  //   didToday: false,
+  // },
+  // {
+  //   id: 2,
+  //   habitName: 'Increase German Score On Duolingo',
+  //   habitStreak: 280,
+  //   didToday: false,
+  // },
 ];
 
 //* Functions
@@ -49,7 +49,7 @@ const habits = [
 // structure of the habit <li> which we want to add
 const habitStructure = function (name, streak) {
   return `            
-  <li class="relative flex mb-2 items-center gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
+  <li class="relative flex mb-2 items-center rounded-sm gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
 
               <!-- Check button -->
               <button
@@ -87,6 +87,15 @@ const habitStructure = function (name, streak) {
             </li>`;
 };
 
+const noHabitMessageStructure = function () {
+  return `
+              <li class="relative flex mb-2 items-center justify-center rounded-sm gap-4 py-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
+     
+              <p class="text-2xl text-[#71717b]">No habits yet. Add one and get after it!</p>
+              
+            </li>`;
+};
+
 // Adding the All habit elements in 'habits' array
 const addHabitElements = function (habits) {
   ulHabitEl.insertAdjacentHTML(
@@ -112,12 +121,12 @@ headerQuote.textContent = quotes[randomQuoteNumber];
 //* Tracking Box
 totalHabits(habits);
 
-//* Habits list
+//* Habits list ---------
 
 // Showing Habits in ul
 addHabitElements(habits);
 
-// if checked
+// Implementing Check Animations and logic + habit Delete Button
 ulHabitEl.addEventListener('click', function (e) {
   // if the button was clicked
   const btnCheck = e.target.closest('.habit-didtoday-checkbox');
@@ -139,7 +148,7 @@ ulHabitEl.addEventListener('click', function (e) {
       1
     );
 
-    // removing element from dom
+    // removing element from DOM
     btnDelete.closest('li').remove(); // method 1
     // btnDelete ? (btnDelete.closest('li').outerHTML = '') : 'hello'; // method 2
   }
@@ -168,7 +177,7 @@ ulHabitEl.addEventListener('click', function (e) {
   fireIcon.classList.toggle('checked-box-fire-color', isChecked);
   fireText.classList.toggle('checked-box-fire-color', isChecked);
 
-  // Making state True & +1 Day Streak ----------------------
+  // Making state True & +1 Day to Streak ----------------------
 
   // Implementing adding 1 to daystreak
   const arrayHabitNames = habits.map(habit => habit.habitName);
@@ -188,7 +197,12 @@ ulHabitEl.addEventListener('click', function (e) {
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
       }
     }
+    // Adding Box For when there are no habits
   }
 
   // Delete Button ----------------------
 });
+
+if (habits.length === 0) {
+  ulHabitEl.insertAdjacentHTML('afterbegin', noHabitMessageStructure());
+}
