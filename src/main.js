@@ -225,9 +225,19 @@ const toggleAddHabitModalStatus = () => {
 // The big button in the modal, Opens the add habit modal
 openAddHabitModal.addEventListener('click', function () {
   toggleAddHabitModalStatus();
+
+  let valueInputAddHabit;
+
+  // removing add button's disabled property
+  addHabitModal.addEventListener('input', function () {
+    valueInputAddHabit = inputAddHabit.value;
+    if (valueInputAddHabit) {
+      btnAddHabit.removeAttribute('disabled'); // toggles again and again
+    } else btnAddHabit.setAttribute('disabled', '');
+  });
 });
 
-// Closing Window
+// Closing Window ------
 btnClose.addEventListener('click', toggleAddHabitModalStatus);
 
 btnCancel.addEventListener('click', function (e) {
