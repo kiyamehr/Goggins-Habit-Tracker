@@ -75,6 +75,11 @@ const calcHabitsCompletedToday = habits => {
   const completed = habits.filter(habit => habit.didToday === true);
 
   trackingCompletedtodayDecimal.textContent = `${completed.length}/${habits.length}`;
+
+  const calcCompletedPercent = Math.trunc(
+    (completed.length / habits.length) * 100
+  );
+  trackingCompletedtodayPercentage.textContent = `${calcCompletedPercent}% Completed`;
 };
 calcHabitsCompletedToday(habits);
 
