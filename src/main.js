@@ -12,6 +12,7 @@ const totalHabitsEl = document.querySelector('#total-habits');
 const ulHabitEl = document.querySelector('#habits-ul');
 const habitButtonEl = document.querySelector('.habit-didtoday-checkbox');
 
+const noHabitMessageEl = document.querySelector('#no-habit-message');
 //* Datas
 
 // Quote Array
@@ -30,18 +31,18 @@ const quotes = [
 
 // Habit Objects Array
 const habits = [
-  // {
-  //   id: 1,
-  //   habitName: 'Run 5 Miles',
-  //   habitStreak: 15,
-  //   didToday: false,
-  // },
-  // {
-  //   id: 2,
-  //   habitName: 'Increase German Score On Duolingo',
-  //   habitStreak: 280,
-  //   didToday: false,
-  // },
+  {
+    id: 1,
+    habitName: 'Run 5 Miles',
+    habitStreak: 15,
+    didToday: false,
+  },
+  {
+    id: 2,
+    habitName: 'Increase German Score On Duolingo',
+    habitStreak: 280,
+    didToday: false,
+  },
 ];
 
 //* Functions
@@ -87,14 +88,13 @@ const habitStructure = function (name, streak) {
             </li>`;
 };
 
-const noHabitMessageStructure = function () {
-  return `
-              <li class="relative flex mb-2 items-center justify-center rounded-sm gap-4 py-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
-     
-              <p class="text-2xl text-[#71717b]">No habits yet. Add one and get after it!</p>
-              
-            </li>`;
+// If there is no habit unhide 'no habit message' element
+const checkHabitZeroMessage = function (habits) {
+  if (habits.length === 0) {
+    noHabitMessageEl.classList.toggle('hidden');
+  }
 };
+checkHabitZeroMessage(habits);
 
 // Adding the All habit elements in 'habits' array
 const addHabitElements = function (habits) {
@@ -150,7 +150,8 @@ ulHabitEl.addEventListener('click', function (e) {
 
     // removing element from DOM
     btnDelete.closest('li').remove(); // method 1
-    // btnDelete ? (btnDelete.closest('li').outerHTML = '') : 'hello'; // method 2
+
+    checkHabitZeroMessage(habits);
   }
 
   // Implementing Check button
@@ -202,7 +203,3 @@ ulHabitEl.addEventListener('click', function (e) {
 
   // Delete Button ----------------------
 });
-
-if (habits.length === 0) {
-  ulHabitEl.insertAdjacentHTML('afterbegin', noHabitMessageStructure());
-}
