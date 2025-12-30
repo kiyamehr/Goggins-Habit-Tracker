@@ -69,14 +69,29 @@ calcBestStreak(habits);
 const calcHabitsCompletedToday = function (habits) {};
 
 // calculating all habits statuces, all, completed, missed
-const calcHabitStatus = function (habits) {
-  statusAll.textContent = `All (${habits.length})`;
 
+const calcHabitAll = habits =>
+  (statusAll.textContent = `All (${habits.length})`);
+
+const calcHabitCompleted = habits => {
   const trueHabits = habits.filter(habit => habit.didToday === true);
   statusCompleted.textContent = `Completed (${trueHabits.length})`;
+};
 
+const calcHabitMissed = habits => {
   const falseHabits = habits.filter(habit => habit.didToday === false);
   statusMissed.textContent = `Missed (${falseHabits.length})`;
+};
+
+const calcHabitStatus = function (habits) {
+  // displaying all(habits.length)
+  calcHabitAll(habits);
+
+  // displaying habits that are 'checked' today
+  calcHabitCompleted(habits);
+
+  // displaying habits that are 'missed' today
+  calcHabitMissed(habits);
 };
 calcHabitStatus(habits);
 
