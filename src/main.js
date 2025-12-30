@@ -63,13 +63,11 @@ const habits = [
 // calculating best Streak
 const calcTotalHabits = habits =>
   (trackingTotalHabitsEl.textContent = habits.length);
-calcTotalHabits(habits);
 
 const calcBestStreak = habits => {
   const bestStreak = Math.max(...habits.map(habit => habit.habitStreak));
   trackingBestStreakEl.textContent = bestStreak;
 };
-calcBestStreak(habits);
 
 const calcHabitsCompletedToday = habits => {
   const completed = habits.filter(habit => habit.didToday === true);
@@ -81,7 +79,19 @@ const calcHabitsCompletedToday = habits => {
   );
   trackingCompletedtodayPercentage.textContent = `${calcCompletedPercent}% Completed`;
 };
-calcHabitsCompletedToday(habits);
+
+const updateTracking = function (habits) {
+  // Total Habits
+  calcTotalHabits(habits);
+
+  // Best Streak
+  calcBestStreak(habits);
+
+  // Habits that are completed today with decimal and percentage
+  calcHabitsCompletedToday(habits);
+};
+
+//TODO: put all of them together, calc total,
 
 // calculating all habits statuces, all, completed, missed
 
