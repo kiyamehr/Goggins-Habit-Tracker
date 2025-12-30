@@ -36,6 +36,7 @@ const noHabitMessageEl = document.querySelector('#no-habit-message');
 
 // Overlay
 const btnClose = document.querySelector('#modal-close-icon');
+const inputAddHabit = document.querySelector('#add-habit-modal-input');
 const btnCancel = document.querySelector('#add-habit-modal-cancel');
 const btnAddHabit = document.querySelector('#add-habit-modal-add-habit');
 
@@ -213,14 +214,32 @@ let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
 
 //* Add Habit Button
+
+// toggle habit hidden class
 const toggleAddHabitModalStatus = () => {
   toggleHidden(addHabitModal);
   toggleHidden(addHabitOverlay);
   body.classList.toggle('overflow-y-hidden');
 };
 
+// The big button in the modal, Opens the add habit modal
 openAddHabitModal.addEventListener('click', function () {
   toggleAddHabitModalStatus();
+});
+
+// Closing Window
+btnClose.addEventListener('click', toggleAddHabitModalStatus);
+
+btnCancel.addEventListener('click', function (e) {
+  e.preventDefault();
+  toggleAddHabitModalStatus();
+  inputAddHabit.value = '';
+});
+
+// close modal with Esc
+document.addEventListener('keydown', function (e) {
+  if (!addHabitOverlay.classList.contains('hidden'))
+    if (e.key === 'Escape') toggleAddHabitModalStatus();
 });
 
 //* Habits list ---------
