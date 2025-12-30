@@ -1,6 +1,7 @@
 'use strict';
 
 //* Selecting DOM Elements
+const body = document.querySelector('body');
 
 // Header
 const headerQuote = document.querySelector('#quote');
@@ -21,11 +22,23 @@ const statusAll = document.querySelector('#status-all');
 const statusCompleted = document.querySelector('#status-completed');
 const statusMissed = document.querySelector('#status-missed');
 
+// add habit +
+const openAddHabitModal = document.querySelector('#open-add-habit-modal');
+
+const addHabitOverlay = document.querySelector('#add-habit-overlay');
+const addHabitModal = document.querySelector('#add-habit-modal');
+
 // Habits list
 const ulHabitEl = document.querySelector('#habits-ul');
 const habitButtonEl = document.querySelector('.habit-didtoday-checkbox');
 
 const noHabitMessageEl = document.querySelector('#no-habit-message');
+
+// Overlay
+const btnClose = document.querySelector('#modal-close-icon');
+const btnCancel = document.querySelector('#add-habit-modal-cancel');
+const btnAddHabit = document.querySelector('#add-habit-modal-add-habit');
+
 //* Datas
 
 // Quote Array
@@ -83,7 +96,7 @@ const calcHabitsCompletedToday = habits => {
   trackingCompletedtodayPercentage.textContent = `${calcCompletedPercent}% Completed`;
 };
 
-const calcTotalReps = function (haibts) {
+const calcTotalReps = function (habits) {
   const reps = habits.filter(habit => habit.didToday === true);
   trackingTotalRepsEl.textContent = reps.length;
 };
@@ -102,7 +115,6 @@ const updateTracking = function (habits) {
   calcTotalReps(habits);
 };
 updateTracking(habits);
-//TODO: put all of them together, calc total,
 
 // calculating all habits statuces, all, completed, missed
 
@@ -172,6 +184,9 @@ const habitStructure = function (name, streak) {
             </li>`;
 };
 
+// remove hidden class
+const toggleHidden = element => element.classList.toggle('hidden');
+
 // Adding the All habit elements in 'habits' array
 const addHabitElements = function (habits) {
   ulHabitEl.insertAdjacentHTML(
@@ -196,6 +211,17 @@ checkHabitZeroMessage(habits);
 // Random Quote For Header
 let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
+
+//* Add Habit Button
+const toggleAddHabitModalStatus = () => {
+  toggleHidden(addHabitModal);
+  toggleHidden(addHabitOverlay);
+  body.classList.toggle('overflow-y-hidden');
+};
+
+openAddHabitModal.addEventListener('click', function () {
+  toggleAddHabitModalStatus();
+});
 
 //* Habits list ---------
 
@@ -272,12 +298,14 @@ ulHabitEl.addEventListener('click', function (e) {
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
         updateHabitStatus(habits);
         updateTracking(habits);
+        checkHabitZeroMessage(habits);
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
         updateHabitStatus(habits);
         updateTracking(habits);
+        checkHabitZeroMessage(habits);
       }
     }
     // Adding Box For when there are no habits
