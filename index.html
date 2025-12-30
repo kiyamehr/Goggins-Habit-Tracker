@@ -34,24 +34,23 @@
         class="grid sm:grid-cols-4 items-center justify-center grid-cols-2 my-8 gap-2 lg:gap-5 w-full"
       >
         <div
-          id="completed-today"
           class="w-full box-card-design py-4 px-5 rounded-sm"
         >
           <p class="text-base text-[#71717b]">
             <i class="fa fa-bullseye text-[#f92b35]"> </i> TODAY
           </p>
-          <p class="text-3xl text-white my-2">2/3</p>
-          <p class="text-sm text-[#52525c]"><span>67</span>% Completed</p>
+          <p id="completed-today-decimal" class="text-3xl text-white my-2">2/3</p>
+          <p id="completed-today-percentage" class="text-sm text-[#52525c]">67% Completed</p>
         </div>
   
         <div
-          id="best-streak"
+          
           class="w-full box-card-design py-4 px-5 rounded-sm"
         >
           <p class="text-base text-[#71717b]">
             <i class="fa fa-arrow-trend-up text-[#ff6900]"></i> BEST STREAK
           </p>
-          <p class="text-3xl text-white my-2">1</p>
+          <p id="best-streak" class="text-3xl text-white my-2">1</p>
           <p class="text-sm text-[#52525c]">Days in a row</p>
         </div>
   
@@ -62,7 +61,7 @@
           <p class="text-base text-[#71717b]">
             <i class="fa fa-check-double text-[#00c54e]"></i> TOTAL REPS
           </p>
-          <p class="text-3xl text-white my-2">2</p>
+          <p id="total-reps" class="text-3xl text-white my-2">2</p>
           <p class="text-sm text-[#52525c]"><span>All Time</p>
         </div>
   
@@ -73,16 +72,16 @@
           <p class="text-base text-[#71717b]">
             <i class="fa fa-medal text-[#f0b100]"></i> Habits
           </p>
-          <p class="text-3xl text-white my-2">3</p>
+          <p id="total-habits" class="text-3xl text-white my-2">3</p>
           <p class="text-sm text-[#52525c]">Active missions</p>
         </div>
       </section>
       <br>
       <!-- habits status -->
        <section id="habits-status" class="grid grid-cols-3 gap-3 lg:gap-5  w-full">
-        <button class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm ">All (<span>3</span>)</button>
-        <button class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Completed (<span>2</span>)</button>
-        <button class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Missed (<span>1</span>)</button>
+        <button id="status-all" class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm ">All (3)</button>
+        <button id="status-completed" class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Completed (2)</button>
+        <button id="status-missed" class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Missed (1)</button>
        </section>
 
        <!-- add habit button  -->
@@ -91,9 +90,13 @@
        </section>
 
        <!-- Habits  -->
-        <section id="habits" class="w-full">
-          <ul id="habits-ul">
-
+       <section id="habits" class="w-full">
+         <ul id="habits-ul">
+            <li id="no-habit-message" class="hidden relative flex mb-2 items-center justify-center rounded-sm gap-4 py-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
+     
+              <p class="text-2xl text-[#71717b]">No habits yet. Add one and get after it!</p>
+              
+            </li>
           </ul>
         </section>
 
