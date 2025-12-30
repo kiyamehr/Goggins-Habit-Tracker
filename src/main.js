@@ -31,11 +31,13 @@ const quotes = [
 // Habit Objects Array
 const habits = [
   {
+    id: 1,
     habitName: 'Run 5 Miles',
     habitStreak: 15,
     didToday: false,
   },
   {
+    id: 2,
     habitName: 'Increase German Score On Duolingo',
     habitStreak: 280,
     didToday: false,
@@ -119,7 +121,30 @@ addHabitElements(habits);
 ulHabitEl.addEventListener('click', function (e) {
   // if the button was clicked
   const btnCheck = e.target.closest('.habit-didtoday-checkbox');
+  const btnDelete = e.target.closest('.fa-trash');
 
+  // Implementing Delete Button
+  if (btnDelete) {
+    // selecting elements from li
+    const li = btnDelete.closest('li');
+    const delHabitName = li.querySelector('.habit-name');
+
+    const selectedHabit = habits.find(
+      habit => habit.habitName === delHabitName.textContent
+    );
+
+    // removing the habit from object
+    habits.splice(
+      habits.findIndex(habit => habit.id === selectedHabit.id),
+      1
+    );
+
+    // removing element from dom
+    btnDelete.closest('li').remove(); // method 1
+    // btnDelete ? (btnDelete.closest('li').outerHTML = '') : 'hello'; // method 2
+  }
+
+  // Implementing Check button
   if (!btnCheck) return;
 
   // selecting Els from parent element which is <li>
@@ -165,7 +190,5 @@ ulHabitEl.addEventListener('click', function (e) {
     }
   }
 
-  //// const btnDelete = e.target.closest('.fa-trash');
-  //// btnDelete ? (btnDelete.closest('li').outerHTML = '') : 'hello';
+  // Delete Button ----------------------
 });
-//TODO: update day steak when clicked!
