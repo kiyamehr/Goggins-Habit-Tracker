@@ -8,6 +8,11 @@ const headerQuote = document.querySelector('#quote');
 // tracking box
 const totalHabitsEl = document.querySelector('#total-habits');
 
+// status buttons
+const statusAll = document.querySelector('#status-all');
+const statusCompleted = document.querySelector('#status-completed');
+const statusMissed = document.querySelector('#status-missed');
+console.log(statusAll.textContent);
 // Habits list
 const ulHabitEl = document.querySelector('#habits-ul');
 const habitButtonEl = document.querySelector('.habit-didtoday-checkbox');
@@ -107,9 +112,9 @@ const addHabitElements = function (habits) {
 };
 
 // Updating Total Habits
-const totalHabits = function (habits) {
-  totalHabitsEl.textContent = habits.length;
-};
+// const calcHabitsLength = function (el, habits) {
+//   el.textContent = habits.length;
+// };
 
 //? Running Codes here --------------------------------------------------------------------------
 
@@ -119,8 +124,10 @@ let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
 
 //* Tracking Box
-totalHabits(habits);
+totalHabitsEl.textContent = habits.length;
 
+//* status buttons
+statusAll.textContent = `All (${habits.length})`;
 //* Habits list ---------
 
 // Showing Habits in ul
