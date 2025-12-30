@@ -12,7 +12,7 @@ const totalHabitsEl = document.querySelector('#total-habits');
 const statusAll = document.querySelector('#status-all');
 const statusCompleted = document.querySelector('#status-completed');
 const statusMissed = document.querySelector('#status-missed');
-console.log(statusAll.textContent);
+
 // Habits list
 const ulHabitEl = document.querySelector('#habits-ul');
 const habitButtonEl = document.querySelector('.habit-didtoday-checkbox');
@@ -111,10 +111,16 @@ const addHabitElements = function (habits) {
   );
 };
 
-// Updating Total Habits
-// const calcHabitsLength = function (el, habits) {
-//   el.textContent = habits.length;
-// };
+const calcHabitStatus = function (habits) {
+  statusAll.textContent = `All (${habits.length})`;
+
+  const trueHabits = habits.filter(habit => habit.didToday === true);
+  statusCompleted.textContent = `Completed (${trueHabits.length})`;
+
+  const falseHabits = habits.filter(habit => habit.didToday === false);
+  statusMissed.textContent = `Missed (${falseHabits.length})`;
+};
+calcHabitStatus(habits);
 
 //? Running Codes here --------------------------------------------------------------------------
 
@@ -126,8 +132,6 @@ headerQuote.textContent = quotes[randomQuoteNumber];
 //* Tracking Box
 totalHabitsEl.textContent = habits.length;
 
-//* status buttons
-statusAll.textContent = `All (${habits.length})`;
 //* Habits list ---------
 
 // Showing Habits in ul
@@ -199,10 +203,12 @@ ulHabitEl.addEventListener('click', function (e) {
         checkedHabitObject.didToday = true; // setting didToday = true
         checkedHabitObject.habitStreak += 1; // adding one to object's day streak
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
+        calcHabitStatus(habits);
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
+        calcHabitStatus(habits);
       }
     }
     // Adding Box For when there are no habits
