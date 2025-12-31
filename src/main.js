@@ -254,12 +254,13 @@ const setButtonToDisabled = function () {
 
 //? EventListener Codes here --------------------------------------------------------------------------
 
-//* Header
+//* Header Quote --------------------------------------------------
+
 // Random Quote For Header
 let randomQuoteNumber = Math.trunc(Math.random() * quotes.length);
 headerQuote.textContent = quotes[randomQuoteNumber];
 
-//* Add Habit Button
+//* Add Habit Button-----------------------------------------
 
 // toggle habit hidden class
 const toggleAddHabitModalStatus = () => {
@@ -281,9 +282,11 @@ addHabitModal.addEventListener('input', setButtonToDisabled);
 // Implementing Add Habit
 btnAddHabit.addEventListener('click', addHabitButtonFunciton);
 
-// Closing Window ------
+//? Closing Modal ------------
+// close with the X button
 btnClose.addEventListener('click', toggleAddHabitModalStatus);
 
+// close with cancel button
 btnCancel.addEventListener('click', function (e) {
   e.preventDefault();
   toggleAddHabitModalStatus();
@@ -297,7 +300,9 @@ document.addEventListener('keydown', function (e) {
   if (e.key === 'Enter') addHabitButtonFunciton(e);
 });
 
-//* Habits list --------
+//* All Completed Missed Status -----------------------------
+
+//* Habits list ---------------------------------------------
 
 // Implementing Check Animations and logic + habit Delete Button
 ulHabitEl.addEventListener('click', function (e) {
