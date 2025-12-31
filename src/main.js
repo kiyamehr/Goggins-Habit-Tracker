@@ -34,6 +34,7 @@ const ulHabitEl = document.querySelector('#habits-ul');
 const habitButtonEl = document.querySelector('.habit-didtoday-checkbox');
 
 const noHabitMessageEl = document.querySelector('#no-habit-message');
+const noHabitMessageText = document.querySelector('#no-habit-message-text');
 
 // Overlay
 const btnClose = document.querySelector('#modal-close-icon');
@@ -69,7 +70,7 @@ const habits = [
     id: 2,
     habitName: 'Increase German Score On Duolingo',
     habitStreak: 280,
-    didToday: true,
+    didToday: false,
   },
 ];
 
@@ -146,7 +147,7 @@ const updateHabitStatus = function (habits) {
 updateHabitStatus(habits);
 
 // structure of the habit <li> which we want to add
-const habitStructure = function (name, streak = 0, didtoday = false) {
+const habitStructure = function (name, streak = 0) {
   return `
   <li class="relative flex mb-2 items-center rounded-sm gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
 
@@ -189,6 +190,15 @@ const habitStructure = function (name, streak = 0, didtoday = false) {
 // remove hidden class
 const toggleHidden = element => element.classList.toggle('hidden');
 
+// return all habit objects
+const allHabitsArr = habits => habits;
+
+const completedHabitsArr = habits =>
+  habits.filter(habit => habit.didToday === true);
+
+const missedHabitsArr = habits =>
+  habits.filter(habit => habit.didToday === false);
+
 // Adding the All habit elements in 'habits' array
 const addHabitElements = function (habits) {
   ulHabitEl.insertAdjacentHTML(
@@ -201,7 +211,7 @@ const addHabitElements = function (habits) {
   );
 };
 // Showing Habits in ul
-addHabitElements(habits);
+addHabitElements(allHabitsArr(habits));
 
 // reusable add habit button function
 const addHabitButtonFunciton = function (e) {
@@ -243,12 +253,14 @@ const toggleDisabled = function (button) {
 };
 
 // If there is no habit unhide 'no habit message' element
-const checkHabitZeroMessage = function (habits) {
+const checkHabitZeroMessage = function (habits, customeMessage) {
+  console.log(customeMessage);
   if (habits.length === 0) {
+    noHabitMessageText.textContent = customeMessage;
     noHabitMessageEl.classList.toggle('hidden');
   }
 };
-checkHabitZeroMessage(habits);
+checkHabitZeroMessage(habits, 'No habits yet. Add one and get after it!');
 
 const setButtonToDisabled = function () {
   inputValue = inputAddHabit.value;
@@ -338,12 +350,23 @@ syncHoverWithActiveState(statusAll);
 statusCompleted.addEventListener('click', function () {
   setActiveStatus(statusCompleted);
   syncHoverWithActiveState(statusCompleted);
+
+  ulHabitEl.innerHTML = '';
+  addHabitElements(completedHabitsArr(habits));
+
+  checkHabitZeroMessage(
+    completedHabitsArr(habits),
+    'No Habits Completed! Stop being weak and get after it!'
+  );
 });
 
 // Missed
 statusMissed.addEventListener('click', function () {
   setActiveStatus(statusMissed);
   syncHoverWithActiveState(statusMissed);
+
+  ulHabitEl.innerHTML = '';
+  addHabitElements(missedHabitsArr(habits));
 });
 
 //* Habits list ---------------------------------------------
@@ -373,7 +396,7 @@ ulHabitEl.addEventListener('click', function (e) {
     // removing element from DOM
     btnDelete.closest('li').remove(); // method 1
 
-    checkHabitZeroMessage(habits);
+    checkHabitZeroMessage(habits, 'Comfort won Again... Fix it!');
     updateHabitStatus(habits);
     updateTracking(habits);
   }
@@ -418,14 +441,14 @@ ulHabitEl.addEventListener('click', function (e) {
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
         updateHabitStatus(habits);
         updateTracking(habits);
-        checkHabitZeroMessage(habits);
+        checkHabitZeroMessage(habits, 'checkHabitZeroMessage');
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
         updateHabitStatus(habits);
         updateTracking(habits);
-        checkHabitZeroMessage(habits);
+        checkHabitZeroMessage(habits, 'checkHabitZeroMessage');
       }
     }
     // Adding Box For when there are no habits
