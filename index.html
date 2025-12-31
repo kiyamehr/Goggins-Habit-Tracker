@@ -55,7 +55,6 @@
         </div>
   
         <div
-          id="total-reps"
           class="w-full box-card-design py-4 px-5 rounded-sm"
         >
           <p class="text-base text-[#71717b]">
@@ -77,16 +76,18 @@
         </div>
       </section>
       <br>
+
+
       <!-- habits status -->
        <section id="habits-status" class="grid grid-cols-3 gap-3 lg:gap-5  w-full">
-        <button id="status-all" class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm ">All (3)</button>
+        <button id="status-all" class="active-button-status text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm ">All (3)</button>
         <button id="status-completed" class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Completed (2)</button>
         <button id="status-missed" class="text-white cursor-pointer hover:border-red-600! transition duration-300 w-full box-card-design py-4 px-5 rounded-sm">Missed (1)</button>
        </section>
 
        <!-- add habit button  -->
-       <section id="add-habit" class="w-full my-8">
-        <button class="w-full bg-red-600 hover:bg-red-800 cursor-pointer transition duration-300 text-white py-3 rounded-sm"><i class="fa fa-plus"></i>&nbsp;&nbsp; ADD NEW HABIT</button>
+       <section class="w-full my-8">
+        <button id="open-add-habit-modal" class="w-full bg-red-600 hover:bg-red-800 cursor-pointer transition duration-300 text-white py-3 rounded-sm"><i class="fa fa-plus"></i>&nbsp;&nbsp; ADD NEW HABIT</button>
        </section>
 
        <!-- Habits  -->
@@ -107,17 +108,17 @@
       <!-- add habit modal -->
 
       <!-- overlay -->
-      <div id="overlay" class="hidden absolute top-0 w-screen h-screen bg-[#09090b] z-5"></div>
+      <div id="add-habit-overlay" class="opacity-90 hidden fixed top-0 w-screen h-screen bg-[#09090b] z-5"></div>
 
       <!-- add habit -->
-      <div id="add-habit" class="hidden flex items-center justify-center z-10 top-0 absolute w-screen h-screen">
+      <div id="add-habit-modal" class=" hidden flex items-center justify-center z-10 top-0 fixed w-screen h-screen">
         
         <!-- add habit card  -->
-        <div id="add-habit-box" class="py-4 px-3 bg-[#18181b] border-2 border-red-600 w-9/12 lg:w-2/5 min-h-6/12 lg:h-1/2 rounded-sm">
+        <div class="py-4 px-3 bg-[#18181b] border-2 border-red-600 w-9/12 lg:w-2/5 min-h-6/12 lg:h-1/2 rounded-sm">
           <section class="flex items-center w-full ">
             <h1 class="text-2xl">ADD NEW HABIT</h1>
             <!-- close button  -->
-            <i id="mdoal-close-icon" class="fa fa-x ml-auto mt-1 mr-4 text-[#71717b] hover:text-white transition duration-300 "></i>
+            <i id="modal-close-icon" class="fa fa-x ml-auto mt-1 mr-4 text-[#71717b] hover:text-white transition duration-300 "></i>
           </section>
 
           <p class="text-sm text-[#71717b] my-4">Habit Name</p>
@@ -133,7 +134,7 @@
               <button id="add-habit-modal-cancel" class="bg-neutral-800 hover:bg-neutral-700 border-2 border-[#3f3f46] min-w-full mx-auto px-2 py-3 rounded-sm transition duration-300 cursor-pointer">CANCEL</button>
   
               <!-- add habit button  -->
-              <button id="add-habit-modal-add-habit" class="bg-red-600 hover:bg-red-700 border-2 border-red-500 min-w-full mx-auto px-2 py-3 rounded-sm transition duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-600" disabled="">ADD HABIT</button>
+              <button id="add-habit-modal-add-habit" type="submit" class="bg-red-600 hover:bg-red-700 border-2 border-red-500 min-w-full mx-auto px-2 py-3 rounded-sm transition duration-300 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-red-600" disabled="">ADD HABIT</button>
              </section>
 
              <!-- modal quote  -->
