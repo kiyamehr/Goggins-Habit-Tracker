@@ -69,7 +69,7 @@ const habits = [
     id: 2,
     habitName: 'Increase German Score On Duolingo',
     habitStreak: 280,
-    didToday: false,
+    didToday: true,
   },
 ];
 
@@ -146,10 +146,8 @@ const updateHabitStatus = function (habits) {
 updateHabitStatus(habits);
 
 // structure of the habit <li> which we want to add
-const habitStructure = function (name, streak) {
-  const didToday = habits.filter(habit => habit.didToday === true);
-
-  return `            
+const habitStructure = function (name, streak = 0, didtoday = false) {
+  return `
   <li class="relative flex mb-2 items-center rounded-sm gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
 
               <!-- Check button -->
@@ -196,7 +194,9 @@ const addHabitElements = function (habits) {
   ulHabitEl.insertAdjacentHTML(
     'afterbegin',
     habits
-      .map(habit => habitStructure(habit.habitName, habit.habitStreak))
+      .map(habit =>
+        habitStructure(habit.habitName, habit.habitStreak, habit.didToday)
+      )
       .join('') // since map returns an array, this removes the ','
   );
 };
@@ -211,10 +211,10 @@ const addHabitButtonFunciton = function (e) {
   const lastId = Math.max(...habits.map(habit => habit.id));
 
   const habitObject = {
-    id: `${lastId + 1}`,
+    id: lastId + 1,
     habitName: `${inputValue}`,
     habitStreak: 0,
-    didToday: `${false}`,
+    didToday: false,
   };
 
   if (habitObject.habitName) {
@@ -227,10 +227,12 @@ const addHabitButtonFunciton = function (e) {
     setButtonToDisabled();
   }
 
-  ulHabitEl.innerHTML = '';
   updateHabitStatus(habits);
   updateTracking(habits);
-  addHabitElements(habits);
+  ulHabitEl.insertAdjacentHTML(
+    'afterbegin',
+    habitStructure(habitObject.habitName)
+  );
 };
 
 // toggling add habit's button disabled attribute
