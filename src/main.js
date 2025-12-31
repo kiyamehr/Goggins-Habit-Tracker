@@ -214,12 +214,12 @@ const addHabitButtonFunciton = function (e) {
     didToday: `${false}`,
   };
 
-  if (habitObject.habitName !== undefined) {
+  if (habitObject.habitName) {
     habits.push(habitObject);
     inputValue = inputAddHabit.value = '';
 
-    toggleHidden(addHabitOverlay);
-    toggleHidden(addHabitModal);
+    toggleHidden(addHabitOverlay); // hide overlay
+    toggleHidden(addHabitModal); // hide modal
     body.classList.toggle('overflow-y-hidden');
     setButtonToDisabled();
   }
@@ -252,7 +252,7 @@ const setButtonToDisabled = function () {
   } else btnAddHabit.setAttribute('disabled', '');
 };
 
-//? Running Codes here --------------------------------------------------------------------------
+//? EventListener Codes here --------------------------------------------------------------------------
 
 //* Header
 // Random Quote For Header
@@ -265,6 +265,7 @@ headerQuote.textContent = quotes[randomQuoteNumber];
 const toggleAddHabitModalStatus = () => {
   toggleHidden(addHabitModal);
   toggleHidden(addHabitOverlay);
+  inputAddHabit.focus(); //! remove this later
   body.classList.toggle('overflow-y-hidden');
 };
 
@@ -279,9 +280,6 @@ addHabitModal.addEventListener('input', setButtonToDisabled);
 
 // Implementing Add Habit
 btnAddHabit.addEventListener('click', addHabitButtonFunciton);
-document.addEventListener('keydown', function (e) {
-  if (e.target === 'Enter') addHabitButtonFunciton();
-});
 
 // Closing Window ------
 btnClose.addEventListener('click', toggleAddHabitModalStatus);
@@ -296,9 +294,7 @@ btnCancel.addEventListener('click', function (e) {
 document.addEventListener('keydown', function (e) {
   if (!addHabitOverlay.classList.contains('hidden'))
     if (e.key === 'Escape') toggleAddHabitModalStatus();
-
-  // Add Habit With Enter
-  if (e.key === 'Enter') addHabitButtonFunciton();
+  if (e.key === 'Enter') addHabitButtonFunciton(e);
 });
 
 //* Habits list --------
