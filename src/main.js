@@ -21,6 +21,7 @@ const trackingCompletedtodayPercentage = document.querySelector(
 const statusAll = document.querySelector('#status-all');
 const statusCompleted = document.querySelector('#status-completed');
 const statusMissed = document.querySelector('#status-missed');
+const SectionStatus = document.querySelector('#habits-status');
 
 // add habit +
 const openAddHabitModal = document.querySelector('#open-add-habit-modal');
@@ -146,6 +147,8 @@ updateHabitStatus(habits);
 
 // structure of the habit <li> which we want to add
 const habitStructure = function (name, streak) {
+  const didToday = habits.filter(habit => habit.didToday === true);
+
   return `            
   <li class="relative flex mb-2 items-center rounded-sm gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
 
@@ -252,6 +255,28 @@ const setButtonToDisabled = function () {
   } else btnAddHabit.setAttribute('disabled', '');
 };
 
+const removeClass = (el, cla) => el.classList.remove(cla);
+
+const setActiveStatus = function (activeBtn) {
+  [statusAll, statusCompleted, statusMissed].forEach(btn =>
+    btn.classList.remove('active-button-status')
+  );
+
+  const includesActive = activeBtn.classList.contains('active-button-status');
+
+  // checking if its Not acitve
+  if (!includesActive) {
+    activeBtn.classList.add('active-button-status');
+  }
+};
+
+// if animation is active, then no hover animation is applied
+const syncHoverWithActiveState = function (activeBtn) {
+  if (activeBtn.classList.contains('active-button-status')) {
+    activeBtn.classList.toggle('hover:border-red-600!');
+  }
+};
+
 //? EventListener Codes here --------------------------------------------------------------------------
 
 //* Header Quote --------------------------------------------------
@@ -301,6 +326,23 @@ document.addEventListener('keydown', function (e) {
 });
 
 //* All Completed Missed Status -----------------------------
+// All
+statusAll.addEventListener('click', function () {
+  setActiveStatus(statusAll);
+});
+syncHoverWithActiveState(statusAll);
+
+// Completed
+statusCompleted.addEventListener('click', function () {
+  setActiveStatus(statusCompleted);
+  syncHoverWithActiveState(statusCompleted);
+});
+
+// Missed
+statusMissed.addEventListener('click', function () {
+  setActiveStatus(statusMissed);
+  syncHoverWithActiveState(statusMissed);
+});
 
 //* Habits list ---------------------------------------------
 
