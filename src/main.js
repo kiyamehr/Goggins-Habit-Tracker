@@ -39,7 +39,7 @@ const btnClose = document.querySelector('#modal-close-icon');
 const inputAddHabit = document.querySelector('#add-habit-modal-input');
 const btnCancel = document.querySelector('#add-habit-modal-cancel');
 const btnAddHabit = document.querySelector('#add-habit-modal-add-habit');
-
+const addHabitFormEl = document.querySelector('#add-habit-modal-form');
 //* Datas
 
 // Quote Array
@@ -214,19 +214,27 @@ const addHabitButtonFunciton = function (e) {
     didToday: `${false}`,
   };
 
-  if (habitObject.habitName) {
+  if (habitObject.habitName !== undefined) {
     habits.push(habitObject);
     inputValue = inputAddHabit.value = '';
 
     toggleHidden(addHabitOverlay);
     toggleHidden(addHabitModal);
     body.classList.toggle('overflow-y-hidden');
+    setButtonToDisabled();
   }
 
   ulHabitEl.innerHTML = '';
   updateHabitStatus(habits);
   updateTracking(habits);
   addHabitElements(habits);
+};
+
+// toggling add habit's button disabled attribute
+const toggleDisabled = function (button) {
+  if (inputValue) {
+    btnAddHabit.removeAttribute('disabled'); // toggles again and again
+  } else btnAddHabit.setAttribute('disabled', '');
 };
 
 // If there is no habit unhide 'no habit message' element
@@ -236,6 +244,13 @@ const checkHabitZeroMessage = function (habits) {
   }
 };
 checkHabitZeroMessage(habits);
+
+const setButtonToDisabled = function () {
+  inputValue = inputAddHabit.value;
+  if (inputValue) {
+    btnAddHabit.removeAttribute('disabled'); // toggles again and again
+  } else btnAddHabit.setAttribute('disabled', '');
+};
 
 //? Running Codes here --------------------------------------------------------------------------
 
@@ -259,16 +274,14 @@ openAddHabitModal.addEventListener('click', function () {
 });
 
 let inputValue;
-// removing add button's disabled property
-addHabitModal.addEventListener('input', function (e) {
-  inputValue = inputAddHabit.value;
-  if (inputValue) {
-    btnAddHabit.removeAttribute('disabled'); // toggles again and again
-  } else btnAddHabit.setAttribute('disabled', '');
-});
+// toggling add button's disabled property
+addHabitModal.addEventListener('input', setButtonToDisabled);
 
 // Implementing Add Habit
 btnAddHabit.addEventListener('click', addHabitButtonFunciton);
+document.addEventListener('keydown', function (e) {
+  if (e.target === 'Enter') addHabitButtonFunciton();
+});
 
 // Closing Window ------
 btnClose.addEventListener('click', toggleAddHabitModalStatus);
@@ -283,6 +296,9 @@ btnCancel.addEventListener('click', function (e) {
 document.addEventListener('keydown', function (e) {
   if (!addHabitOverlay.classList.contains('hidden'))
     if (e.key === 'Escape') toggleAddHabitModalStatus();
+
+  // Add Habit With Enter
+  if (e.key === 'Enter') addHabitButtonFunciton();
 });
 
 //* Habits list --------
