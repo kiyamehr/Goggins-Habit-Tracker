@@ -83,7 +83,7 @@ const calcTotalHabits = habits =>
 const calcBestStreak = habits => {
   const bestStreak = Math.max(...habits.map(habit => habit.habitStreak));
 
-  bestStreak !== -Infinity
+  bestStreak !== -Infinity && habits.length === 0
     ? (trackingBestStreakEl.textContent = bestStreak)
     : (trackingBestStreakEl.textContent = 0);
 };
@@ -96,7 +96,9 @@ const calcHabitsCompletedToday = habits => {
   const calcCompletedPercent = Math.trunc(
     (completed.length / habits.length) * 100
   );
-  trackingCompletedtodayPercentage.textContent = `${calcCompletedPercent}% Completed`;
+  trackingCompletedtodayPercentage.textContent = `${
+    habits.length !== 0 ? calcCompletedPercent : 0
+  }% Completed`;
 };
 
 const calcTotalReps = function (habits) {
@@ -147,9 +149,11 @@ const updateHabitStatus = function (habits) {
 updateHabitStatus(habits);
 
 // structure of the habit <li> which we want to add
-const habitStructure = function (name, streak = 0) {
+const habitStructure = function (name, streak = 0, didtoday = false) {
+  const activeStateLi = didtoday ? 'checked-box-habit' : '';
+
   return `
-  <li class="relative flex mb-2 items-center rounded-sm gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300">
+  <li class="relative flex mb-2 items-center rounded-sm gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300 ${activeStateLi}">
 
               <!-- Check button -->
               <button
@@ -186,6 +190,15 @@ const habitStructure = function (name, streak = 0) {
 
             </li>`;
 };
+
+// If there is no habit unhide 'no habit message' element
+const checkHabitZeroMessage = function (habits, customMessage) {
+  if (habits.length === 0) {
+    noHabitMessageText.textContent = customMessage;
+    noHabitMessageEl.classList.toggle('hidden');
+  }
+};
+checkHabitZeroMessage(habits, 'No habits yet. Add one and get after it!');
 
 // remove hidden class
 const toggleHidden = element => element.classList.toggle('hidden');
@@ -251,16 +264,6 @@ const toggleDisabled = function (button) {
     btnAddHabit.removeAttribute('disabled'); // toggles again and again
   } else btnAddHabit.setAttribute('disabled', '');
 };
-
-// If there is no habit unhide 'no habit message' element
-const checkHabitZeroMessage = function (habits, customeMessage) {
-  console.log(customeMessage);
-  if (habits.length === 0) {
-    noHabitMessageText.textContent = customeMessage;
-    noHabitMessageEl.classList.toggle('hidden');
-  }
-};
-checkHabitZeroMessage(habits, 'No habits yet. Add one and get after it!');
 
 const setButtonToDisabled = function () {
   inputValue = inputAddHabit.value;
@@ -343,6 +346,9 @@ document.addEventListener('keydown', function (e) {
 // All
 statusAll.addEventListener('click', function () {
   setActiveStatus(statusAll);
+
+  ulHabitEl.innerHTML = '';
+  addHabitElements(allHabitsArr(habits));
 });
 syncHoverWithActiveState(statusAll);
 
@@ -353,11 +359,6 @@ statusCompleted.addEventListener('click', function () {
 
   ulHabitEl.innerHTML = '';
   addHabitElements(completedHabitsArr(habits));
-
-  checkHabitZeroMessage(
-    completedHabitsArr(habits),
-    'No Habits Completed! Stop being weak and get after it!'
-  );
 });
 
 // Missed
@@ -366,11 +367,14 @@ statusMissed.addEventListener('click', function () {
   syncHoverWithActiveState(statusMissed);
 
   ulHabitEl.innerHTML = '';
+  checkHabitZeroMessage(
+    missedHabitsArr(habits),
+    "No Habits Missed! That's What im Talking about"
+  );
   addHabitElements(missedHabitsArr(habits));
 });
 
 //* Habits list ---------------------------------------------
-
 // Implementing Check Animations and logic + habit Delete Button
 ulHabitEl.addEventListener('click', function (e) {
   // if the button was clicked
@@ -441,14 +445,12 @@ ulHabitEl.addEventListener('click', function (e) {
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `; // changing the elements text
         updateHabitStatus(habits);
         updateTracking(habits);
-        checkHabitZeroMessage(habits, 'checkHabitZeroMessage');
       } else {
         checkedHabitObject.didToday = false;
         checkedHabitObject.habitStreak -= 1;
         fireText.textContent = `${checkedHabitObject.habitStreak} day streak `;
         updateHabitStatus(habits);
         updateTracking(habits);
-        checkHabitZeroMessage(habits, 'checkHabitZeroMessage');
       }
     }
     // Adding Box For when there are no habits
