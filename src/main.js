@@ -199,10 +199,11 @@ const habitStructure = function (name, streak = 0, didtoday = false) {
 const checkHabitZeroMessage = function (habits, customMessage) {
   if (habits.length === 0) {
     noHabitMessageText.textContent = customMessage;
-    noHabitMessageEl.classList.toggle('hidden');
+    noHabitMessageEl.classList.remove('hidden');
+  } else {
+    noHabitMessageEl.classList.add('hidden');
   }
 };
-checkHabitZeroMessage(habits, 'No habits yet. Add one and get after it!');
 
 // remove hidden class
 const toggleHidden = element => element.classList.toggle('hidden');
