@@ -83,7 +83,7 @@ const calcTotalHabits = habits =>
 const calcBestStreak = habits => {
   const bestStreak = Math.max(...habits.map(habit => habit.habitStreak));
 
-  bestStreak !== -Infinity && habits.length === 0
+  bestStreak !== -Infinity
     ? (trackingBestStreakEl.textContent = bestStreak)
     : (trackingBestStreakEl.textContent = 0);
 };
@@ -151,6 +151,10 @@ updateHabitStatus(habits);
 // structure of the habit <li> which we want to add
 const habitStructure = function (name, streak = 0, didtoday = false) {
   const activeStateLi = didtoday ? 'checked-box-habit' : '';
+  const activeStateChectText = didtoday ? 'opacity-100' : 'opacity-0';
+  const activeStateTotalCount = didtoday ? 'opacity-100' : 'opacity-0';
+  const activeStateBtnCheck = didtoday ? 'checked-button-habit' : '';
+  const activeStateFire = didtoday ? 'checked-box-fire-color' : '';
 
   return `
   <li class="relative flex mb-2 items-center rounded-sm gap-4 py-5 px-7 bg-[#18181b] border-2 border-[#27272a] transition duration-300 ${activeStateLi}">
@@ -159,8 +163,8 @@ const habitStructure = function (name, streak = 0, didtoday = false) {
               <button
                 type="button"
                 aria-label="Mark habit as done"
-                class="habit-didtoday-checkbox w-7 h-7 shrink-0 rounded-full border-2 border-[#52525c] transition duration-300 hover:scale-110 cursor-pointer">
-                <i class='fa fa-check opacity-0 duration-300'></i>
+                class="${activeStateBtnCheck} habit-didtoday-checkbox w-7 h-7 shrink-0 rounded-full border-2 border-[#52525c] transition duration-300 hover:scale-110 cursor-pointer">
+                <i class='fa fa-check  ${activeStateChectText} duration-300'></i>
               </button>
 
               <!-- Content -->
@@ -168,13 +172,13 @@ const habitStructure = function (name, streak = 0, didtoday = false) {
                 <p class="habit-name text-xl font-bold text-neutral-200">${name}</p>
 
                 <div class="flex items-center text-sm text-neutral-300">
-                  <i class="fa fa-fire mr-2 duration-300"></i>
+                  <i class="${activeStateFire} fa fa-fire mr-2 duration-300"></i>
 
-                  <span class='fire-text duration-300'>
+                  <span class='${activeStateFire} fire-text duration-300'>
                     ${streak} day streak
                   </span>
 
-                  <span class="ml-4 text-stone-500 opacity-0 total-count duration-300">
+                  <span class="ml-4 text-stone-500 ${activeStateTotalCount} total-count duration-300">
                     • 1 total
                   </span>
                 </div>
